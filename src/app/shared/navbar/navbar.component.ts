@@ -110,6 +110,20 @@ export class NavbarComponent implements OnInit {
       ruta: '/dashboard/categorias'
     },
     {
+      nombre: 'Etiquetas',
+      palabrasClave: ['listado', 'etiquetas'],
+      descripcion: 'Listado de etiquetas',
+      soloAdmin: true,
+      ruta: '/dashboard/etiquetas'
+    },
+    {
+      nombre: 'Clasificaciones',
+      palabrasClave: ['listado', 'clasificaciones', 'clasificación', 'clasificacion'],
+      descripcion: 'Listado de clasificaciones',
+      soloAdmin: true,
+      ruta: '/dashboard/clasificaciones'
+    },
+    {
       nombre: 'Usuarios',
       palabrasClave: ['listado', 'usuarios', 'listado usuarios', 'listado de usuarios'],
       descripcion: 'Gestiona los usuarios del sistema',
