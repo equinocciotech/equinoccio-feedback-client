@@ -90,6 +90,13 @@ export const routes: Routes = [
         path: 'etiquetas',
         title: 'Etiquetas',
         loadComponent: () => import('./pages/etiquetas/etiquetas.component'),
+      },
+
+      // Clasificaciones
+      {
+        path: 'clasificaciones',
+        title: 'Clasificaciones',
+        loadComponent: () => import('./pages/clasificaciones/clasificaciones.component'),
       }
 
     ]
