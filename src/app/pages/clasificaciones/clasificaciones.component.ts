@@ -60,7 +60,8 @@ export default class ClasificacionesComponent implements OnInit {
   public clasificacionSeleccionada: any = null;
 
   public abmForm: any = {
-    descripcion: ''
+    descripcion: '',
+    puntuacion: null
   }
 
   public loadingClasificaciones: boolean = false;
@@ -115,11 +116,13 @@ export default class ClasificacionesComponent implements OnInit {
     this.estadoAbm = estado;
     if (estado == 'crear') {
       this.abmForm.descripcion = '';
+      this.abmForm.puntuacion = null;
       this.clasificacionSeleccionada = null;
     }
     else {
       this.clasificacionSeleccionada = clasificacion;
-      this.abmForm.descripcion = clasificacion.descripcion
+      this.abmForm.descripcion = clasificacion.descripcion;
+      this.abmForm.puntuacion = clasificacion.puntuacion;
     };
     this.showModalAbm = true;
   }
@@ -131,12 +134,18 @@ export default class ClasificacionesComponent implements OnInit {
       return;
     }
 
+    if (this.abmForm.puntuacion === null || this.abmForm.puntuacion === '') {
+      this.alertService.info('La puntuación es requerida');
+      return;
+    }
+
     this.alertService.question({ msg: 'Creando clasificación', buttonText: 'Aceptar' })
       .then(({ isConfirmed }) => {
         if (isConfirmed) {
           this.alertService.loading();
           const dataCrear = {
             descripcion: this.abmForm.descripcion,
+            puntuacion: Number(this.abmForm.puntuacion),
             creatorUserId: this.authService.usuario.userId
           }
           this.clasificacionesService.nuevaClasificacion(dataCrear).subscribe({
@@ -158,7 +167,10 @@ export default class ClasificacionesComponent implements OnInit {
       .then(({ isConfirmed }) => {
         if (isConfirmed) {
           this.alertService.loading();
-          const dataActualizar = { descripcion: this.abmForm.descripcion }
+          const dataActualizar = {
+            descripcion: this.abmForm.descripcion,
+            puntuacion: Number(this.abmForm.puntuacion)
+          }
           this.clasificacionesService.actualizarClasificacion(this.clasificacionSeleccionada.id, dataActualizar).subscribe({
             next: ({ clasificacion }) => {
               this.clasificaciones = this.clasificaciones.map(c => c.id == clasificacion.id ? clasificacion : c);
