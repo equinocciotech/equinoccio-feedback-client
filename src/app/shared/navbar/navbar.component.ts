@@ -103,6 +103,13 @@ export class NavbarComponent implements OnInit {
       ruta: '/dashboard/unidades-medida'
     },
     {
+      nombre: 'Categorías',
+      palabrasClave: ['listado', 'categorias', 'categorías'],
+      descripcion: 'Listado de categorías',
+      soloAdmin: true,
+      ruta: '/dashboard/categorias'
+    },
+    {
       nombre: 'Usuarios',
       palabrasClave: ['listado', 'usuarios', 'listado usuarios', 'listado de usuarios'],
       descripcion: 'Gestiona los usuarios del sistema',
