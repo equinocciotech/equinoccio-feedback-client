@@ -54,6 +54,27 @@
       <span class="ml-3 font-medium"> Inicio </span>
     </li>
 
+    <!-- Categorías -->
+    <li *ngIf="authService.isAdmin" routerLinkActive="bg-secondaryColor" [routerLink]="['/dashboard/categorias']"
+      class="flex items-center px-3 py-2.5 rounded-lg cursor-pointer hover:bg-gray-700 transition duration-200">
+      <img src="assets/svg/categorias.svg" class="w-5 h-5">
+      <span class="ml-3 font-medium"> Categorías </span>
+    </li>
+
+    <!-- Clasificaciones -->
+    <li *ngIf="authService.isAdmin" routerLinkActive="bg-secondaryColor" [routerLink]="['/dashboard/clasificaciones']"
+      class="flex items-center px-3 py-2.5 rounded-lg cursor-pointer hover:bg-gray-700 transition duration-200">
+      <img src="assets/svg/clasificaciones.svg" class="w-5 h-5">
+      <span class="ml-3 font-medium"> Clasificaciones </span>
+    </li>
+
+    <!-- Etiquetas -->
+    <li *ngIf="authService.isAdmin" routerLinkActive="bg-secondaryColor" [routerLink]="['/dashboard/etiquetas']"
+      class="flex items-center px-3 py-2.5 rounded-lg cursor-pointer hover:bg-gray-700 transition duration-200">
+      <img src="assets/svg/etiquetas.svg" class="w-5 h-5">
+      <span class="ml-3 font-medium"> Etiquetas </span>
+    </li>
+
     <!-- Configuraciones -->
     <li *ngIf="authService.isAdmin" class="mt-4">
       <button (click)="abrirCerrarSeccion('configuraciones')"
@@ -78,18 +99,6 @@
         <button routerLinkActive="bg-secondaryColor" [routerLink]="['/dashboard/unidades-medida']"
           class="w-full px-3 py-2 text-left rounded-lg hover:bg-gray-700 transition duration-200">
           Unidades de medida
-        </button>
-        <button routerLinkActive="bg-secondaryColor" [routerLink]="['/dashboard/categorias']"
-          class="w-full px-3 py-2 text-left rounded-lg hover:bg-gray-700 transition duration-200">
-          Categorías
-        </button>
-        <button routerLinkActive="bg-secondaryColor" [routerLink]="['/dashboard/etiquetas']"
-          class="w-full px-3 py-2 text-left rounded-lg hover:bg-gray-700 transition duration-200">
-          Etiquetas
-        </button>
-        <button routerLinkActive="bg-secondaryColor" [routerLink]="['/dashboard/clasificaciones']"
-          class="w-full px-3 py-2 text-left rounded-lg hover:bg-gray-700 transition duration-200">
-          Clasificaciones
         </button>
       </div>
     </li>
