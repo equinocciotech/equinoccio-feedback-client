@@ -39,18 +39,18 @@ export default class DetallesCategoriasComponent implements OnInit {
     private router: Router
   ) { }
 
-    ngOnInit(): void {
-      const id = this.activatedRoute.snapshot.paramMap.get('id');
-      if(id){
-        this.categoriasService.getCategoria(id).subscribe({
-          next: ({ categoria }) => {
-            this.categoria = categoria;
-            this.listarClasificaciones();
-            this.listarEtiquetas();
-          }
-        });
-      }
+  ngOnInit(): void {
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
+    if (id) {
+      this.categoriasService.getCategoria(id).subscribe({
+        next: ({ categoria }) => {
+          this.categoria = categoria;
+          this.listarClasificaciones();
+          this.listarEtiquetas();
+        }
+      });
     }
+  }
 
   listarClasificaciones(): void {
     const parametros: any = {
@@ -66,6 +66,7 @@ export default class DetallesCategoriasComponent implements OnInit {
         this.clasificaciones.forEach(clasificacion => {
           this.etiquetasAparicionService.getEtiquetasAparicionByClasificacionAndCategoria(clasificacion.id, this.categoria.id).subscribe({
             next: ({ etiquetasAparicion }) => {
+              console.log(etiquetasAparicion);
               this.etiquetasPorClasificacion[clasificacion.id] = etiquetasAparicion.map(e => e.etiqueta);
             }
           });
@@ -120,20 +121,15 @@ export default class DetallesCategoriasComponent implements OnInit {
       creatorUserId: this.authService.usuario.userId
     };
 
-    console.log(data);
-
-      this.etiquetasAparicionService.nuevaEtiquetaAparicion(data).subscribe({
-        next: () => {
-          this.alertService.success('Etiqueta agregada correctamente');
-          this.etiquetasAparicionService.getEtiquetasAparicionByClasificacionAndCategoria(this.clasificacionSeleccionada.id, this.categoria.id).subscribe({
-            next: ({ etiquetasAparicion }) => {
-              this.etiquetasPorClasificacion[this.clasificacionSeleccionada.id] = etiquetasAparicion.map(e => e.etiqueta);
-            }
-          });
-          this.cerrarModal();
-        },
-        error: () => this.alertService.errorApi('Error al agregar la etiqueta')
-      });
+    this.etiquetasAparicionService.nuevaEtiquetaAparicion(data).subscribe({
+      next: ({ etiquetaAparicion }) => {
+        this.alertService.success('Etiqueta agregada correctamente');
+        // Agregr la etiqueta a la lista de etiquetas por clasificacion
+        this.etiquetasPorClasificacion[this.clasificacionSeleccionada.id].push(etiquetaAparicion.etiqueta);
+        this.cerrarModal();
+      },
+      error: () => this.alertService.errorApi('Error al agregar la etiqueta')
+    });
   }
 
   volver(): void {
