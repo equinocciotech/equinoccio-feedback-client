@@ -4,35 +4,50 @@ import { CommonModule } from '@angular/common';
 import { TarjetaListaComponent } from '../../../components/tarjeta-lista/tarjeta-lista.component';
 import { ClasificacionesService } from '../../../services/clasificaciones.service';
 import { CategoriasService } from '../../../services/categorias.service';
+import { EtiquetasService } from '../../../services/etiquetas.service';
+import { EtiquetasAparicionService } from '../../../services/etiquetas-aparicion.service';
+import { AlertService } from '../../../services/alert.service';
+import { ModalComponent } from '../../../components/modal/modal.component';
 
 @Component({
   standalone: true,
   selector: 'app-detalles-categorias',
-  templateUrl: './detalles-categorias.component.html',
-  imports: [CommonModule, TarjetaListaComponent, RouterLink],
-  styleUrls: ['./detalles-categorias.component.css']
-})
-export default class DetallesCategoriasComponent implements OnInit {
+    templateUrl: './detalles-categorias.component.html',
+    imports: [CommonModule, TarjetaListaComponent, RouterLink, ModalComponent],
+    styleUrls: ['./detalles-categorias.component.css']
+  })
+  export default class DetallesCategoriasComponent implements OnInit {
 
-  public clasificaciones: any[] = [];
-  public categoria: any = null;
+    public clasificaciones: any[] = [];
+    public categoria: any = null;
+    public etiquetas: any[] = [];
+    public etiquetasAparicion: any[] = [];
+    public clasificacionSeleccionada: any = null;
+    public modalVisible: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private clasificacionesService: ClasificacionesService,
     private categoriasService: CategoriasService,
+    private etiquetasService: EtiquetasService,
+    private etiquetasAparicionService: EtiquetasAparicionService,
+    private alertService: AlertService,
     private router: Router
   ) { }
 
-  ngOnInit(): void {
-    const id = this.activatedRoute.snapshot.paramMap.get('id');
-    if(id){
-      this.categoriasService.getCategoria(id).subscribe({
-        next: ({ categoria }) => this.categoria = categoria
-      });
+    ngOnInit(): void {
+      const id = this.activatedRoute.snapshot.paramMap.get('id');
+      if(id){
+        this.categoriasService.getCategoria(id).subscribe({
+          next: ({ categoria }) => {
+            this.categoria = categoria;
+            this.listarEtiquetasAparicion();
+          }
+        });
+      }
+      this.listarClasificaciones();
+      this.listarEtiquetas();
     }
-    this.listarClasificaciones();
-  }
 
   listarClasificaciones(): void {
     const parametros: any = {
@@ -44,6 +59,67 @@ export default class DetallesCategoriasComponent implements OnInit {
     };
     this.clasificacionesService.listarClasificaciones(parametros).subscribe({
       next: ({ clasificaciones }) => this.clasificaciones = clasificaciones
+    });
+  }
+
+  listarEtiquetas(): void {
+    const parametros = {
+      direccion: 'asc',
+      columna: 'descripcion',
+      activo: 'true'
+    };
+    this.etiquetasService.listarEtiquetas(parametros).subscribe({
+      next: ({ etiquetas }) => this.etiquetas = etiquetas
+    });
+  }
+
+  listarEtiquetasAparicion(): void {
+    if (!this.categoria) return;
+    const parametros = {
+      direccion: 'desc',
+      columna: 'createdAt',
+      categoriaId: this.categoria._id
+    };
+    this.etiquetasAparicionService.listarEtiquetasAparicion(parametros).subscribe({
+      next: ({ etiquetasAparicion }) => this.etiquetasAparicion = etiquetasAparicion
+    });
+  }
+
+  getEtiquetasPorClasificacion(clasificacionId: string): any[] {
+    return this.etiquetasAparicion
+      .filter(e => e.clasificacion._id === clasificacionId)
+      .map(e => e.etiqueta);
+  }
+
+  abrirModal(clasificacion: any): void {
+    this.clasificacionSeleccionada = clasificacion;
+    this.modalVisible = true;
+  }
+
+  cerrarModal(): void {
+    this.modalVisible = false;
+    this.clasificacionSeleccionada = null;
+  }
+
+  agregarEtiqueta(etiqueta: any): void {
+    if (!this.clasificacionSeleccionada) {
+      this.alertService.info('Por favor seleccione una clasificación');
+      return;
+    }
+
+    const data = {
+      etiquetaId: etiqueta._id,
+      categoriaId: this.categoria._id,
+      clasificacionId: this.clasificacionSeleccionada._id
+    };
+
+    this.etiquetasAparicionService.nuevaEtiquetaAparicion(data).subscribe({
+      next: () => {
+        this.alertService.success('Etiqueta agregada correctamente');
+        this.listarEtiquetasAparicion();
+        this.cerrarModal();
+      },
+      error: () => this.alertService.errorApi('Error al agregar la etiqueta')
     });
   }
 
