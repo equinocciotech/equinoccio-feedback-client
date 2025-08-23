@@ -63,7 +63,7 @@
 </app-tarjeta-lista>
 
 <!-- Modal de selección -->
-<app-modal *ngIf="modalVisible" (cerrar)="cerrarModal()">
+<app-modal [showModal]="modalVisible" (closeModal)="cerrarModal()">
   <!-- Paso 1: Selección de clasificación -->
   <ng-container *ngIf="modalPasoActual === 'clasificacion'">
     <h3 class="text-lg font-bold mb-4" header>
