@@ -139,6 +139,18 @@ export default class ClasificacionesComponent implements OnInit {
       return;
     }
 
+    const puntuacion = Number(this.abmForm.puntuacion);
+
+    if (puntuacion < 1 || puntuacion > 5) {
+      this.alertService.info('La puntuación debe estar entre 1 y 5');
+      return;
+    }
+
+    if (this.clasificaciones.some(c => c.puntuacion === puntuacion)) {
+      this.alertService.info('La puntuación ya está en uso');
+      return;
+    }
+
     this.alertService.question({ msg: 'Creando clasificación', buttonText: 'Aceptar' })
       .then(({ isConfirmed }) => {
         if (isConfirmed) {
@@ -163,13 +175,25 @@ export default class ClasificacionesComponent implements OnInit {
   }
 
   actualizarClasificacion(): void {
+    const puntuacion = Number(this.abmForm.puntuacion);
+
+    if (puntuacion < 1 || puntuacion > 5) {
+      this.alertService.info('La puntuación debe estar entre 1 y 5');
+      return;
+    }
+
+    if (this.clasificaciones.some(c => c.puntuacion === puntuacion && c.id !== this.clasificacionSeleccionada.id)) {
+      this.alertService.info('La puntuación ya está en uso');
+      return;
+    }
+
     this.alertService.question({ msg: 'Actualizando clasificación', buttonText: 'Aceptar' })
       .then(({ isConfirmed }) => {
         if (isConfirmed) {
           this.alertService.loading();
           const dataActualizar = {
             descripcion: this.abmForm.descripcion,
-            puntuacion: Number(this.abmForm.puntuacion)
+            puntuacion
           }
           this.clasificacionesService.actualizarClasificacion(this.clasificacionSeleccionada.id, dataActualizar).subscribe({
             next: ({ clasificacion }) => {
