@@ -57,7 +57,8 @@
                 <div class="relative flex-grow">
                   <input #buscadorCategorias [(ngModel)]="filtro.parametro" placeholder="Buscar categoría..."
                     class="input-tabla-buscador w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-secondaryColor focus:border-secondaryColor transition-all duration-200" />
-                  <div *ngIf="!loadingCategorias" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400">
+                  <div *ngIf="!loadingCategorias"
+                    class="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -152,15 +153,14 @@
                   </td>
                   <td class="td-tabla">
                     <div class="flex items-center justify-center gap-2">
-                      <button title="Detalles" (click)="verDetalles(categoria.id)"
-                        class="boton-tabla-ver text-center">
-                        <img src="assets/svg/lista.svg" class="w-4 h-4 opacity-80">
-                        <span class="ml-2">Detalles</span>
-                      </button>
                       <button title="Editar categoría" (click)="abrirAbm('editar', categoria)"
                         class="boton-tabla-editar text-center">
                         <img src="assets/svg/editar.svg" class="w-4 h-4 opacity-80">
                         <span class="ml-2">Editar</span>
+                      </button>
+                      <button title="Detalles" (click)="verDetalles(categoria.id)" class="boton-tabla-editar">
+                        <img src="assets/svg/detalles.svg" class="w-4 h-4 opacity-80">
+                        <span class="ml-2">Detalles</span>
                       </button>
                     </div>
                   </td>

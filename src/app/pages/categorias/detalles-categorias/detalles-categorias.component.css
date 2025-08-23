@@ -1,0 +1,86 @@
+/* Estilos para las estrellas de calificación */
+.text-yellow-400 {
+  color: #fbbf24;
+}
+
+.text-gray-300 {
+  color: #d1d5db;
+}
+
+/* Transiciones suaves para las estrellas */
+.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* Hover effects para las estrellas */
+.text-gray-300:hover {
+  color: #9ca3af;
+}
+
+.text-yellow-400:hover {
+  color: #f59e0b;
+}
+
+/* Estilos para las tarjetas */
+.hover\:shadow-lg:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Transiciones para las tarjetas */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Colores de fondo para diferentes puntuaciones */
+.bg-green-50 {
+  background-color: #f0fdf4;
+}
+
+.border-green-200 {
+  border-color: #bbf7d0;
+}
+
+.bg-yellow-50 {
+  background-color: #fefce8;
+}
+
+.border-yellow-200 {
+  border-color: #fde68a;
+}
+
+.bg-orange-50 {
+  background-color: #fff7ed;
+}
+
+.border-orange-200 {
+  border-color: #fed7aa;
+}
+
+.bg-red-50 {
+  background-color: #fef2f2;
+}
+
+.border-red-200 {
+  border-color: #fecaca;
+}
+
+/* Colores de texto para diferentes estados */
+.text-green-700 {
+  color: #15803d;
+}
+
+.text-yellow-700 {
+  color: #a16207;
+}
+
+.text-orange-700 {
+  color: #c2410c;
+}
+
+.text-red-700 {
+  color: #be123c;
+}
