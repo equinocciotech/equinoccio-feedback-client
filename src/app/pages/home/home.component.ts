@@ -21,6 +21,7 @@ export default class HomeComponent implements OnInit {
 
   ngOnInit() {
     gsap.from('.gsap-contenido', { y:100, opacity: 0, duration: .2 });
+    gsap.from('.nav-card', { y:30, opacity:0, duration:.5, stagger:.1, delay:.2 });
   }
 
 }
