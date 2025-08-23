@@ -66,8 +66,7 @@ export default class DetallesCategoriasComponent implements OnInit {
         this.clasificaciones.forEach(clasificacion => {
           this.etiquetasAparicionService.getEtiquetasAparicionByClasificacionAndCategoria(clasificacion.id, this.categoria.id).subscribe({
             next: ({ etiquetasAparicion }) => {
-              console.log(etiquetasAparicion);
-              this.etiquetasPorClasificacion[clasificacion.id] = etiquetasAparicion.map(e => e.etiqueta);
+              this.etiquetasPorClasificacion[clasificacion.id] = etiquetasAparicion;
             }
           });
         });
@@ -124,12 +123,31 @@ export default class DetallesCategoriasComponent implements OnInit {
     this.etiquetasAparicionService.nuevaEtiquetaAparicion(data).subscribe({
       next: ({ etiquetaAparicion }) => {
         this.alertService.success('Etiqueta agregada correctamente');
-        // Agregr la etiqueta a la lista de etiquetas por clasificacion
-        this.etiquetasPorClasificacion[this.clasificacionSeleccionada.id].push(etiquetaAparicion.etiqueta);
+        // Agregar la etiqueta a la lista de etiquetas por clasificacion
+        this.etiquetasPorClasificacion[this.clasificacionSeleccionada.id] =
+          this.etiquetasPorClasificacion[this.clasificacionSeleccionada.id] || [];
+        this.etiquetasPorClasificacion[this.clasificacionSeleccionada.id].push(etiquetaAparicion);
         this.cerrarModal();
       },
       error: () => this.alertService.errorApi('Error al agregar la etiqueta')
     });
+  }
+
+  eliminarEtiqueta(etiquetaAparicion: any, clasificacionId: number): void {
+    this.alertService.question({ msg: 'Eliminando etiqueta', buttonText: 'Eliminar' })
+      .then(({ isConfirmed }) => {
+        if (isConfirmed) {
+          this.alertService.loading();
+          this.etiquetasAparicionService.actualizarEtiquetaAparicion(etiquetaAparicion.id, { activo: false }).subscribe({
+            next: () => {
+              this.etiquetasPorClasificacion[clasificacionId] =
+                this.etiquetasPorClasificacion[clasificacionId].filter(e => e.id !== etiquetaAparicion.id);
+              this.alertService.close();
+            },
+            error: ({ error }) => this.alertService.errorApi(error.message)
+          });
+        }
+      });
   }
 
   volver(): void {
