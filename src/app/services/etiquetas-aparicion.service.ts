@@ -41,6 +41,12 @@ export class EtiquetasAparicionService {
     })
   }
 
+  getEtiquetasAparicionByClasificacionAndCategoria(clasificacionId: number, categoriaId: number): Observable<any> {
+    return this.http.get(`${urlApi}/clasificacion/${clasificacionId}/categoria/${categoriaId}`, {
+      headers: this.getToken
+    })
+  }
+
   nuevaEtiquetaAparicion(data: any): Observable<any> {
     return this.http.post(urlApi, data, {
       headers: this.getToken
