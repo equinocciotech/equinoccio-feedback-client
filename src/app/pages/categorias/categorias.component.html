@@ -150,12 +150,19 @@
                     <app-pastilla-estado [activo]=categoria.activo
                       (click)="actualizarEstado(categoria)"></app-pastilla-estado>
                   </td>
-                  <td class="td-tabla flex items-center justify-center">
-                    <button title="Editar categoría" (click)="abrirAbm('editar', categoria)"
-                      class="boton-tabla-editar text-center">
-                      <img src="assets/svg/editar.svg" class="w-4 h-4 opacity-80">
-                      <span class="ml-2">Editar</span>
-                    </button>
+                  <td class="td-tabla">
+                    <div class="flex items-center justify-center gap-2">
+                      <button title="Ver clasificaciones" (click)="verClasificaciones(categoria.id)"
+                        class="boton-tabla-ver text-center">
+                        <img src="assets/svg/lista.svg" class="w-4 h-4 opacity-80">
+                        <span class="ml-2">Clasificaciones</span>
+                      </button>
+                      <button title="Editar categoría" (click)="abrirAbm('editar', categoria)"
+                        class="boton-tabla-editar text-center">
+                        <img src="assets/svg/editar.svg" class="w-4 h-4 opacity-80">
+                        <span class="ml-2">Editar</span>
+                      </button>
+                    </div>
                   </td>
                 </tr>
                 }@empty {

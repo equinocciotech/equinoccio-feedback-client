@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { fromEvent, map, debounceTime } from 'rxjs';
+import { Router } from '@angular/router';
 import { AlertService } from '../../services/alert.service';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
@@ -69,6 +70,7 @@ export default class CategoriasComponent implements OnInit {
     public categoriasService: CategoriasService,
     private authService: AuthService,
     private alertService: AlertService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -227,6 +229,10 @@ export default class CategoriasComponent implements OnInit {
   cambiarPagina(nroPagina): void {
     this.paginaActual = nroPagina;
     this.listarCategorias();
+  }
+
+  verClasificaciones(categoriaId: number): void {
+    this.router.navigate(['/dashboard/categorias/detalles', categoriaId]);
   }
 
 }
