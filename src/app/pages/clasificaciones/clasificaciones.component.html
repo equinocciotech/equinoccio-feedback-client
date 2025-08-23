@@ -110,6 +110,21 @@
                     </div>
                   </th>
                   <th class="th-tabla">
+                    <div (click)="ordenarPorColumna('puntuacion')" class="group cursor-pointer flex items-center justify-center">
+                      <span>Puntuación</span>
+                      <span class="ml-2 text-gray-400 group-hover:text-gray-700">
+                        <svg *ngIf="ordenar.columna == 'puntuacion' && ordenar.direccion == 'asc'" class="w-5 h-5"
+                          fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                        <svg *ngIf="ordenar.columna == 'puntuacion' && ordenar.direccion == 'desc'" class="w-5 h-5"
+                          fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                        </svg>
+                      </span>
+                    </div>
+                  </th>
+                  <th class="th-tabla">
                     <div (click)="ordenarPorColumna('createdAt')" class="group cursor-pointer flex items-center">
                       <span>Fecha de creación</span>
                       <span class="ml-2 text-gray-400 group-hover:text-gray-700">
@@ -152,6 +167,9 @@
                   <td class="td-tabla">
                     <div>{{ clasificacion.descripcion }}</div>
                   </td>
+                  <td class="td-tabla text-center">
+                    <div>{{ clasificacion.puntuacion }}</div>
+                  </td>
                   <td class="td-tabla">
                     <div>{{ clasificacion.createdAt | date:'dd/MM/yyyy' }}</div>
                   </td>
@@ -169,7 +187,7 @@
                 </tr>
                 }@empty {
                 <tr>
-                  <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500 bg-gray-50">
+                  <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500 bg-gray-50">
                     No se encontraron clasificaciones
                   </td>
                 </tr>
@@ -195,6 +213,10 @@
                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                     {{ clasificacion.createdAt | date:'dd/MM/yyyy' }}
+                  </div>
+                  <div class="text-sm text-gray-500 mt-1 flex items-center">
+                    <span class="mr-1">⭐</span>
+                    {{ clasificacion.puntuacion }}
                   </div>
                 </div>
               </div>
