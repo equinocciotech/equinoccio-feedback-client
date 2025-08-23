@@ -85,6 +85,12 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/categorias/categorias.component'),
       },
 
+      {
+        path: 'categorias/detalles/:id',
+        title: 'Detalles de categoría',
+        loadComponent: () => import('./pages/categorias/detalles-categorias/detalles-categorias.component'),
+      },
+
       // Etiquetas
       {
         path: 'etiquetas',

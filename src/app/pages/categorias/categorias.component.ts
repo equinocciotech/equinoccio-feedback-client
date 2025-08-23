@@ -231,7 +231,7 @@ export default class CategoriasComponent implements OnInit {
     this.listarCategorias();
   }
 
-  verClasificaciones(categoriaId: number): void {
+  verDetalles(categoriaId: number): void {
     this.router.navigate(['/dashboard/categorias/detalles', categoriaId]);
   }
 

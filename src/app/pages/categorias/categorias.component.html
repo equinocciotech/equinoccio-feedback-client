@@ -152,10 +152,10 @@
                   </td>
                   <td class="td-tabla">
                     <div class="flex items-center justify-center gap-2">
-                      <button title="Ver clasificaciones" (click)="verClasificaciones(categoria.id)"
+                      <button title="Detalles" (click)="verDetalles(categoria.id)"
                         class="boton-tabla-ver text-center">
                         <img src="assets/svg/lista.svg" class="w-4 h-4 opacity-80">
-                        <span class="ml-2">Clasificaciones</span>
+                        <span class="ml-2">Detalles</span>
                       </button>
                       <button title="Editar categoría" (click)="abrirAbm('editar', categoria)"
                         class="boton-tabla-editar text-center">
@@ -199,6 +199,10 @@
               <div class="mt-4 flex items-center justify-end space-x-2">
                 <app-pastilla-estado [activo]=categoria.activo (click)="actualizarEstado(categoria)"
                   class="transform hover:scale-105 transition-transform duration-200"></app-pastilla-estado>
+                <button (click)="verDetalles(categoria.id)" class="boton-tabla-ver">
+                  <img src="assets/svg/lista.svg" class="w-4 h-4">
+                  <span class="ml-2 font-medium">Detalles</span>
+                </button>
                 <button (click)="abrirAbm('editar', categoria)" class="boton-tabla-editar">
                   <img src="assets/svg/editar.svg" class="w-4 h-4">
                   <span class="ml-2 font-medium">Editar</span>
