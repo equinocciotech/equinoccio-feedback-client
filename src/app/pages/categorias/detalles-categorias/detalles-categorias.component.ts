@@ -9,6 +9,7 @@ import { EtiquetasService } from '../../../services/etiquetas.service';
 import { EtiquetasAparicionService } from '../../../services/etiquetas-aparicion.service';
 import { AlertService } from '../../../services/alert.service';
 import { ModalComponent } from '../../../components/modal/modal.component';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   standalone: true,
@@ -28,6 +29,7 @@ export default class DetallesCategoriasComponent implements OnInit {
   public filtroEtiqueta: string = '';
 
   constructor(
+    private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private clasificacionesService: ClasificacionesService,
     private categoriasService: CategoriasService,
@@ -118,10 +120,13 @@ export default class DetallesCategoriasComponent implements OnInit {
     }
 
     const data = {
-      etiquetaId: etiqueta._id,
-      categoriaId: this.categoria._id,
-      clasificacionId: this.clasificacionSeleccionada._id
+      etiquetaId: etiqueta.id,
+      categoriaId: this.categoria.id,
+      clasificacionId: this.clasificacionSeleccionada.id,
+      creatorUserId: this.authService.usuario.userId
     };
+
+    console.log(data);
 
     this.etiquetasAparicionService.nuevaEtiquetaAparicion(data).subscribe({
       next: () => {
