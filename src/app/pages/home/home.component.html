@@ -7,12 +7,30 @@
     <h1 class="text-xl md:text-3xl mt-8"> EQUINOCCIO TEMPLATE </h1>
     <p class="text-gray-600 mt-2"> Version 1.1.0 </p>
   </div>
-  <div class="mt-10 flex items-center justify-center w-full flex-wrap mx-auto pb-10">
+  <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-5xl mx-auto pb-10">
 
     <div title="Usuarios" routerLink="/dashboard/usuarios"
-      class="w-44 h-32 group duration-200 m-2 relative shadow-lg rounded-lg justify-center cursor-pointer hover:bg-fuchsia-400 hover:text-white transform hover:-translate-y-2 border border-gray-200 bg-gray-100 text-center">
+      class="nav-card w-44 h-32 group duration-200 relative shadow-lg rounded-lg justify-center cursor-pointer border border-gray-200 bg-gray-100 text-center transform hover:-translate-y-2 hover:shadow-2xl">
       <img class="w-24 mt-2 group-hover:scale-105 transition-all mx-auto" src="assets/svg/usuarios.svg">
       <p class="bg-fuchsia-400 text-sm absolute w-full p-2 rounded-b-lg bottom-0 text-white"> Usuarios </p>
+    </div>
+
+    <div title="Categorías" routerLink="/dashboard/categorias"
+      class="nav-card w-44 h-32 group duration-200 relative shadow-lg rounded-lg justify-center cursor-pointer border border-gray-200 bg-gray-100 text-center transform hover:-translate-y-2 hover:shadow-2xl">
+      <img class="w-24 mt-2 group-hover:scale-105 transition-all mx-auto" src="assets/svg/categorias.svg">
+      <p class="bg-blue-400 text-sm absolute w-full p-2 rounded-b-lg bottom-0 text-white"> Categorías </p>
+    </div>
+
+    <div title="Etiquetas" routerLink="/dashboard/etiquetas"
+      class="nav-card w-44 h-32 group duration-200 relative shadow-lg rounded-lg justify-center cursor-pointer border border-gray-200 bg-gray-100 text-center transform hover:-translate-y-2 hover:shadow-2xl">
+      <img class="w-24 mt-2 group-hover:scale-105 transition-all mx-auto" src="assets/svg/etiquetas.svg">
+      <p class="bg-green-400 text-sm absolute w-full p-2 rounded-b-lg bottom-0 text-white"> Etiquetas </p>
+    </div>
+
+    <div title="Clasificaciones" routerLink="/dashboard/clasificaciones"
+      class="nav-card w-44 h-32 group duration-200 relative shadow-lg rounded-lg justify-center cursor-pointer border border-gray-200 bg-gray-100 text-center transform hover:-translate-y-2 hover:shadow-2xl">
+      <img class="w-24 mt-2 group-hover:scale-105 transition-all mx-auto" src="assets/svg/clasificaciones.svg">
+      <p class="bg-yellow-400 text-sm absolute w-full p-2 rounded-b-lg bottom-0 text-white"> Clasificaciones </p>
     </div>
 
   </div>

@@ -100,21 +100,24 @@
   </div>
 </app-tarjeta-lista>
 
-<app-modal [showModal]="modalVisible" (closeModal)="cerrarModal()">
-  <h3 class="text-lg font-bold mb-4" header>
-    Seleccionar etiqueta para {{ clasificacionSeleccionada?.descripcion }}
-  </h3>
-  <div content>
-    <div class="grid grid-cols-1 gap-2 max-h-96 overflow-y-auto">
+<app-modal
+  [showModal]="modalVisible"
+  (closeModal)="cerrarModal()"
+  [titulo]="'Seleccionar etiqueta para ' + (clasificacionSeleccionada?.descripcion || '')"
+  [showFooter]="false">
+  <div class="p-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-96 overflow-y-auto">
       <div *ngFor="let etiqueta of etiquetas"
            (click)="agregarEtiqueta(etiqueta)"
-           class="p-3 border rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
-        {{ etiqueta.descripcion }}
+           class="flex items-center p-3 border rounded-lg cursor-pointer bg-white hover:bg-blue-50 hover:shadow-md transform transition-transform duration-200 hover:-translate-y-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M17.707 7.293l-5-5A1 1 0 0012 2H5a1 1 0 00-1 1v7a1 1 0 00.293.707l5 5a1 1 0 001.414 0l7-7a1 1 0 000-1.414zM6 6a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd" />
+        </svg>
+        <span class="text-gray-700">{{ etiqueta.descripcion }}</span>
       </div>
     </div>
-  </div>
-  <div footer class="flex justify-end">
-    <button (click)="cerrarModal()"
-            class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md">Cancelar</button>
+    <div class="flex justify-end mt-4">
+      <button (click)="cerrarModal()" class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md transition-colors">Cancelar</button>
+    </div>
   </div>
 </app-modal>
