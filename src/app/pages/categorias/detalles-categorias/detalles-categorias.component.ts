@@ -23,7 +23,7 @@ export default class DetallesCategoriasComponent implements OnInit {
   public clasificaciones: any[] = [];
   public categoria: any = null;
   public etiquetas: any[] = [];
-  public etiquetasAparicion: any[] = [];
+  public etiquetasPorClasificacion: { [key: string]: any[] } = {};
   public clasificacionSeleccionada: any = null;
   public modalVisible: boolean = false;
   public filtroEtiqueta: string = '';
@@ -45,12 +45,11 @@ export default class DetallesCategoriasComponent implements OnInit {
         this.categoriasService.getCategoria(id).subscribe({
           next: ({ categoria }) => {
             this.categoria = categoria;
-            this.listarEtiquetasAparicion();
+            this.listarClasificaciones();
+            this.listarEtiquetas();
           }
         });
       }
-      this.listarClasificaciones();
-      this.listarEtiquetas();
     }
 
   listarClasificaciones(): void {
@@ -62,7 +61,16 @@ export default class DetallesCategoriasComponent implements OnInit {
       activo: 'true'
     };
     this.clasificacionesService.listarClasificaciones(parametros).subscribe({
-      next: ({ clasificaciones }) => this.clasificaciones = clasificaciones
+      next: ({ clasificaciones }) => {
+        this.clasificaciones = clasificaciones;
+        this.clasificaciones.forEach(clasificacion => {
+          this.etiquetasAparicionService.getEtiquetasAparicionByClasificacionAndCategoria(clasificacion.id, this.categoria.id).subscribe({
+            next: ({ etiquetasAparicion }) => {
+              this.etiquetasPorClasificacion[clasificacion.id] = etiquetasAparicion.map(e => e.etiqueta);
+            }
+          });
+        });
+      }
     });
   }
 
@@ -77,22 +85,8 @@ export default class DetallesCategoriasComponent implements OnInit {
     });
   }
 
-  listarEtiquetasAparicion(): void {
-    if (!this.categoria) return;
-    const parametros = {
-      direccion: 'desc',
-      columna: 'createdAt',
-      categoriaId: this.categoria._id
-    };
-    this.etiquetasAparicionService.listarEtiquetasAparicion(parametros).subscribe({
-      next: ({ etiquetasAparicion }) => this.etiquetasAparicion = etiquetasAparicion
-    });
-  }
-
   getEtiquetasPorClasificacion(clasificacionId: string): any[] {
-    return this.etiquetasAparicion
-      .filter(e => e.clasificacion._id === clasificacionId)
-      .map(e => e.etiqueta);
+    return this.etiquetasPorClasificacion[clasificacionId] || [];
   }
 
   get etiquetasFiltradas(): any[] {
@@ -128,14 +122,18 @@ export default class DetallesCategoriasComponent implements OnInit {
 
     console.log(data);
 
-    this.etiquetasAparicionService.nuevaEtiquetaAparicion(data).subscribe({
-      next: () => {
-        this.alertService.success('Etiqueta agregada correctamente');
-        this.listarEtiquetasAparicion();
-        this.cerrarModal();
-      },
-      error: () => this.alertService.errorApi('Error al agregar la etiqueta')
-    });
+      this.etiquetasAparicionService.nuevaEtiquetaAparicion(data).subscribe({
+        next: () => {
+          this.alertService.success('Etiqueta agregada correctamente');
+          this.etiquetasAparicionService.getEtiquetasAparicionByClasificacionAndCategoria(this.clasificacionSeleccionada.id, this.categoria.id).subscribe({
+            next: ({ etiquetasAparicion }) => {
+              this.etiquetasPorClasificacion[this.clasificacionSeleccionada.id] = etiquetasAparicion.map(e => e.etiqueta);
+            }
+          });
+          this.cerrarModal();
+        },
+        error: () => this.alertService.errorApi('Error al agregar la etiqueta')
+      });
   }
 
   volver(): void {
