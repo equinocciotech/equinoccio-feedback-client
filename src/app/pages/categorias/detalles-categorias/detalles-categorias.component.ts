@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { TarjetaListaComponent } from '../../../components/tarjeta-lista/tarjeta-lista.component';
 import { ClasificacionesService } from '../../../services/clasificaciones.service';
 import { CategoriasService } from '../../../services/categorias.service';
@@ -12,18 +13,19 @@ import { ModalComponent } from '../../../components/modal/modal.component';
 @Component({
   standalone: true,
   selector: 'app-detalles-categorias',
-    templateUrl: './detalles-categorias.component.html',
-    imports: [CommonModule, TarjetaListaComponent, RouterLink, ModalComponent],
-    styleUrls: ['./detalles-categorias.component.css']
-  })
-  export default class DetallesCategoriasComponent implements OnInit {
+  templateUrl: './detalles-categorias.component.html',
+  imports: [CommonModule, FormsModule, TarjetaListaComponent, RouterLink, ModalComponent],
+  styleUrls: ['./detalles-categorias.component.css']
+})
+export default class DetallesCategoriasComponent implements OnInit {
 
-    public clasificaciones: any[] = [];
-    public categoria: any = null;
-    public etiquetas: any[] = [];
-    public etiquetasAparicion: any[] = [];
-    public clasificacionSeleccionada: any = null;
-    public modalVisible: boolean = false;
+  public clasificaciones: any[] = [];
+  public categoria: any = null;
+  public etiquetas: any[] = [];
+  public etiquetasAparicion: any[] = [];
+  public clasificacionSeleccionada: any = null;
+  public modalVisible: boolean = false;
+  public filtroEtiqueta: string = '';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -91,14 +93,22 @@ import { ModalComponent } from '../../../components/modal/modal.component';
       .map(e => e.etiqueta);
   }
 
+  get etiquetasFiltradas(): any[] {
+    return this.etiquetas.filter(e =>
+      e.descripcion.toLowerCase().includes(this.filtroEtiqueta.toLowerCase())
+    );
+  }
+
   abrirModal(clasificacion: any): void {
     this.clasificacionSeleccionada = clasificacion;
+    this.filtroEtiqueta = '';
     this.modalVisible = true;
   }
 
   cerrarModal(): void {
     this.modalVisible = false;
     this.clasificacionSeleccionada = null;
+    this.filtroEtiqueta = '';
   }
 
   agregarEtiqueta(etiqueta: any): void {
