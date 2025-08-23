@@ -98,12 +98,6 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/etiquetas/etiquetas.component'),
       },
 
-      {
-        path: 'categorias/etiquetas-aparicion/:id',
-        title: 'Etiquetas de aparición',
-        loadComponent: () => import('./pages/categorias/etiquetas-aparicion/etiquetas-aparicion.component'),
-      },
-
       // Clasificaciones
       {
         path: 'clasificaciones',
